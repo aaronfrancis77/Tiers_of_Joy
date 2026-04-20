@@ -528,11 +528,8 @@
     </div>
   </div>
 
-  <!-- Formspree Ajax — CDN, no bundler needed -->
-  <script>
-    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
-    formspree('initForm', { formElement: '#order-form', formId: 'mqewldyk' });
-  </script>
+  <!-- Formspree Ajax — init runs first (queues call), CDN picks it up -->
+  <script src="js/order.js" defer></script>
   <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
 
 </body>
