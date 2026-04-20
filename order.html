@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Place an Order — Tiers of Joy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:    #F4F7FF;
+      --pink:     #F472A8;
+      --pink-dk:  #C9477E;
+      --pink-lt:  #FFE0EF;
+      --blue:     #2E5FA3;
+      --blue-lt:  #D6E6FA;
+      --espresso: #0F1F3D;
+      --white:    #FAFDFF;
+      --muted:    #5A6A85;
+      --error:    #D93025;
+      --error-lt: #FDE8E7;
+      --radius:   1rem;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--espresso);
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: rgba(244, 247, 255, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--pink-lt);
+      padding: 1rem 4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--blue);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--pink); }
+    .nav-back {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.4rem;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--blue); }
+    .nav-back::before { content: '←'; }
+
+    /* ── PAGE ── */
+    .page {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 4rem 2rem 6rem;
+    }
+
+    .page-header { text-align: center; margin-bottom: 3rem; }
+
+    .pill {
+      display: inline-block;
+      background: var(--blue-lt);
+      color: var(--blue);
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.25rem 0.9rem;
+      border-radius: 2rem;
+      border: 2px solid var(--blue);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.04em;
+    }
+
+    h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.15;
+      margin-bottom: 0.75rem;
+    }
+    h1 span { color: var(--pink); }
+
+    .page-header p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--white);
+      border: 2.5px solid var(--pink-lt);
+      border-radius: 1.5rem;
+      padding: 2.5rem;
+      box-shadow: 6px 6px 0 var(--pink-lt);
+    }
+
+    .form-section { margin-bottom: 2rem; }
+    .form-section-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid var(--blue-lt);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row.full { grid-template-columns: 1fr; }
+
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--espresso);
+      letter-spacing: 0.02em;
+    }
+    label .required { color: var(--pink); margin-left: 2px; }
+
+    input, select, textarea {
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.95rem;
+      color: var(--espresso);
+      background: var(--cream);
+      border: 2px solid var(--blue-lt);
+      border-radius: 0.65rem;
+      padding: 0.7rem 1rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      width: 100%;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(244, 114, 168, 0.15);
+    }
+    input::placeholder, textarea::placeholder { color: #9BADC2; }
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%232E5FA3' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      padding-right: 2.5rem;
+    }
+    textarea { resize: vertical; min-height: 120px; line-height: 1.6; }
+
+    /* Field error state — Formspree sets aria-invalid="true" */
+    input[aria-invalid="true"],
+    select[aria-invalid="true"],
+    textarea[aria-invalid="true"] {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(217, 48, 37, 0.12);
+    }
+
+    /* Field-level error messages */
+    [data-fs-error] {
+      display: none;
+      font-size: 0.78rem;
+      color: var(--error);
+      font-weight: 600;
+      margin-top: 0.2rem;
+    }
+
+    /* Form-level error banner */
+    .form-error-banner {
+      display: none;
+      background: var(--error-lt);
+      border: 2px solid var(--error);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1.1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.88rem;
+      color: var(--error);
+      font-weight: 600;
+    }
+
+    /* ── SUCCESS STATE ── */
+    .success-card {
+      display: none;
+      text-align: center;
+      background: var(--white);
+      border: 2.5px solid var(--pink);
+      border-radius: 1.5rem;
+      padding: 3.5rem 2.5rem;
+      box-shadow: 6px 6px 0 var(--pink-lt);
+      animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.9) translateY(16px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .success-emoji { font-size: 4.5rem; display: block; margin-bottom: 1.25rem; }
+    .success-card h2 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--blue);
+      margin-bottom: 0.5rem;
+    }
+    .success-card h2 span { color: var(--pink); }
+    .success-card p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--muted);
+      margin-bottom: 2rem;
+    }
+    .success-steps {
+      background: var(--blue-lt);
+      border: 2px solid var(--blue);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      text-align: left;
+      margin-bottom: 2rem;
+    }
+    .success-steps h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+    .success-step {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      font-size: 0.85rem; line-height: 1.6; color: var(--espresso);
+      margin-bottom: 0.5rem;
+    }
+    .success-step:last-child { margin-bottom: 0; }
+    .step-num {
+      background: var(--pink); color: white;
+      font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 0.75rem;
+      width: 20px; height: 20px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 2px;
+    }
+    .btn-home {
+      display: inline-block;
+      background: var(--pink); color: white;
+      font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 700;
+      padding: 0.85rem 2.5rem;
+      border: 2.5px solid var(--pink-dk);
+      border-radius: 3rem;
+      box-shadow: 4px 4px 0 var(--pink-dk);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-home:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pink-dk); }
+
+    /* ── RADIO PILLS ── */
+    .radio-group { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .radio-group input[type="radio"] { display: none; }
+    .radio-group label {
+      display: inline-block;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.82rem; font-weight: 600;
+      padding: 0.4rem 0.9rem;
+      border: 2px solid var(--blue-lt);
+      border-radius: 2rem;
+      background: var(--cream);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .radio-group input[type="radio"]:checked + label {
+      background: var(--pink); border-color: var(--pink-dk); color: white;
+    }
+    .radio-group label:hover { border-color: var(--pink); color: var(--pink); }
+
+    /* ── SUBMIT ── */
+    .submit-area { margin-top: 2rem; text-align: center; }
+
+    .btn-submit {
+      background: var(--pink); color: white;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem; font-weight: 800;
+      padding: 1rem 3rem;
+      border: 2.5px solid var(--pink-dk);
+      border-radius: 3rem;
+      box-shadow: 5px 5px 0 var(--pink-dk);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+      width: 100%;
+    }
+    .btn-submit:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--pink-dk); }
+    .btn-submit:active { transform: translate(1px, 1px); box-shadow: 3px 3px 0 var(--pink-dk); }
+    .btn-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: 3px 3px 0 var(--pink-dk);
+    }
+
+    .submit-note {
+      margin-top: 0.85rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── INFO STRIP ── */
+    .info-strip {
+      margin-top: 2rem;
+      background: var(--blue-lt);
+      border: 2px solid var(--blue);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .info-strip h3 {
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 700; color: var(--blue);
+    }
+    .info-row {
+      display: flex; align-items: flex-start; gap: 0.5rem;
+      font-size: 0.83rem; color: var(--espresso); line-height: 1.5;
+    }
+    .info-row .icon { flex-shrink: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.25rem; }
+      .page { padding: 2rem 1rem 4rem; }
+      .form-card { padding: 1.5rem; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Tiers of <span>Joy</span></a>
+    <a class="nav-back" href="index.html">Back to Home</a>
+  </nav>
+
+  <div class="page">
+    <div class="page-header">
+      <div class="pill">🎂 Place an Order</div>
+      <h1>Let's Make Something<br><span>Delicious!</span></h1>
+      <p>Fill in the details below and I'll get back to you within 24 hours to confirm your order and chat about any extras.</p>
+    </div>
+
+    <!-- Success state — shown by Formspree Ajax on successful submission -->
+    <div class="success-card" data-fs-success>
+      <span class="success-emoji">🎂</span>
+      <h2>You're all set, <span>sweetie!</span></h2>
+      <p>Your order request has been received. I'll be in touch within <strong>24 hours</strong> to confirm the details and get your cake on the calendar!</p>
+      <div class="success-steps">
+        <h3>What happens next?</h3>
+        <div class="success-step">
+          <span class="step-num">1</span>
+          <span>I'll review your order and email you to confirm all the details.</span>
+        </div>
+        <div class="success-step">
+          <span class="step-num">2</span>
+          <span>Once confirmed, a 50% deposit secures your date.</span>
+        </div>
+        <div class="success-step">
+          <span class="step-num">3</span>
+          <span>I'll bake your cake fresh and be in touch with pick-up details closer to the date.</span>
+        </div>
+      </div>
+      <a href="index.html" class="btn-home">Back to Home 🏡</a>
+    </div>
+
+    <!-- Order form — hidden by Formspree Ajax after successful submission -->
+    <form id="order-form" class="form-card">
+
+      <input type="hidden" name="_subject" value="🎂 New Cake Order — Tiers of Joy" />
+
+      <!-- Form-level error banner -->
+      <div class="form-error-banner" data-fs-error>
+        ⚠️ Something went wrong. Please check the fields below and try again.
+      </div>
+
+      <!-- CONTACT -->
+      <div class="form-section">
+        <div class="form-section-title">👤 Your Details</div>
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Full Name <span class="required">*</span></label>
+            <input type="text" id="name" name="name" placeholder="e.g. Sarah Johnson"
+                   data-fs-field required />
+            <span data-fs-error="name"></span>
+          </div>
+          <div class="field">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="sarah@example.com"
+                   data-fs-field required />
+            <span data-fs-error="email"></span>
+          </div>
+        </div>
+        <div class="form-row" style="margin-top: 1rem;">
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" name="phone" placeholder="Optional, for quick questions"
+                   data-fs-field />
+            <span data-fs-error="phone"></span>
+          </div>
+          <div class="field">
+            <label for="date">Date Needed <span class="required">*</span></label>
+            <input type="date" id="date" name="date_needed"
+                   data-fs-field required />
+            <span data-fs-error="date_needed"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCCASION -->
+      <div class="form-section">
+        <div class="form-section-title">🎉 The Occasion</div>
+        <div class="field" style="margin-bottom: 1rem;">
+          <label>What's the occasion? <span class="required">*</span></label>
+          <div class="radio-group">
+            <input type="radio" id="occ-birthday"    name="occasion" value="Birthday"    required /><label for="occ-birthday">🎂 Birthday</label>
+            <input type="radio" id="occ-wedding"     name="occasion" value="Wedding"            /><label for="occ-wedding">💍 Wedding</label>
+            <input type="radio" id="occ-anniversary" name="occasion" value="Anniversary"        /><label for="occ-anniversary">🥂 Anniversary</label>
+            <input type="radio" id="occ-baby"        name="occasion" value="Baby Shower"        /><label for="occ-baby">👶 Baby Shower</label>
+            <input type="radio" id="occ-corporate"   name="occasion" value="Corporate"          /><label for="occ-corporate">💼 Corporate</label>
+            <input type="radio" id="occ-other"       name="occasion" value="Other"              /><label for="occ-other">✨ Other</label>
+          </div>
+          <span data-fs-error="occasion"></span>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="servings">Number of Servings <span class="required">*</span></label>
+            <select id="servings" name="servings" data-fs-field required>
+              <option value="" disabled selected>How many people?</option>
+              <option>6–10 people (small)</option>
+              <option>10–20 people (medium)</option>
+              <option>20–40 people (large)</option>
+              <option>40+ people (event size)</option>
+              <option>Not sure — let's chat!</option>
+            </select>
+            <span data-fs-error="servings"></span>
+          </div>
+          <div class="field">
+            <label for="tiers">Number of Tiers</label>
+            <select id="tiers" name="tiers" data-fs-field>
+              <option value="" disabled selected>How many tiers?</option>
+              <option>1 tier</option>
+              <option>2 tiers</option>
+              <option>3 tiers</option>
+              <option>Not sure — let's chat!</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- FLAVOUR -->
+      <div class="form-section">
+        <div class="form-section-title">🍰 Cake Preferences</div>
+        <div class="field" style="margin-bottom: 1rem;">
+          <label>Flavour <span class="required">*</span></label>
+          <div class="radio-group">
+            <input type="radio" id="fl-strawberry" name="flavour" value="Strawberry Dream"    required /><label for="fl-strawberry">🍓 Strawberry Dream</label>
+            <input type="radio" id="fl-dark"        name="flavour" value="Dark Velvet"                /><label for="fl-dark">🍫 Dark Velvet</label>
+            <input type="radio" id="fl-lemon"       name="flavour" value="Lemon Bliss"                /><label for="fl-lemon">🍋 Lemon Bliss</label>
+            <input type="radio" id="fl-custom"      name="flavour" value="Custom — see notes"         /><label for="fl-custom">✨ Something Custom</label>
+          </div>
+          <span data-fs-error="flavour"></span>
+        </div>
+        <div class="form-row full">
+          <div class="field">
+            <label for="design">Design Ideas / Theme</label>
+            <input type="text" id="design" name="design_ideas"
+                   placeholder="e.g. Floral, minimalist, pink & gold, favourite character…"
+                   data-fs-field />
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTES -->
+      <div class="form-section" style="margin-bottom: 0;">
+        <div class="form-section-title">📝 Anything Else?</div>
+        <div class="form-row full">
+          <div class="field">
+            <label for="allergies">Allergies or Dietary Requirements</label>
+            <input type="text" id="allergies" name="allergies"
+                   placeholder="e.g. nut-free, gluten-free, dairy-free…"
+                   data-fs-field />
+          </div>
+        </div>
+        <div class="form-row full" style="margin-top: 1rem;">
+          <div class="field">
+            <label for="message">Additional Notes</label>
+            <textarea id="message" name="message"
+                      placeholder="Anything else I should know? Inspo photos, special requests, a message for the cake…"
+                      data-fs-field></textarea>
+            <span data-fs-error="message"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="submit-area">
+        <button type="submit" class="btn-submit" data-fs-submit-btn>
+          Send My Order Request 🎂
+        </button>
+        <p class="submit-note">I'll reply within 24 hours to confirm details and send a quote. Orders need at least 5–7 days notice.</p>
+      </div>
+    </form>
+
+    <div class="info-strip">
+      <h3>📌 Good to Know</h3>
+      <div class="info-row"><span class="icon">📅</span><span>Please order at least <strong>5–7 days in advance</strong>. Custom or multi-tier cakes may need more time.</span></div>
+      <div class="info-row"><span class="icon">💳</span><span>A 50% deposit is required to confirm your order. Payment details sent via email.</span></div>
+      <div class="info-row"><span class="icon">📍</span><span>Cakes are available for <strong>pick-up only</strong>. Address shared after order confirmation.</span></div>
+      <div class="info-row"><span class="icon">📸</span><span>Feel free to send inspo photos via email after submitting — the more detail, the better!</span></div>
+    </div>
+  </div>
+
+  <!-- Formspree Ajax — CDN, no bundler needed -->
+  <script>
+    window.formspree = window.formspree || function () { (formspree.q = formspree.q || []).push(arguments); };
+    formspree('initForm', { formElement: '#order-form', formId: 'mqewldyk' });
+  </script>
+  <script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+</body>
+</html>

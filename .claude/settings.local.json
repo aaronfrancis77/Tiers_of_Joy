@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx claude-code-templates@latest --skill creative-design/ui-ux-pro-max)",
+      "Bash(cmd.exe /c \"npx claude-code-templates@latest --skill creative-design/ui-ux-pro-max 2>&1\")",
+      "PowerShell(npx claude-code-templates@latest --skill creative-design/ui-ux-pro-max 2>&1)",
+      "PowerShell(Get-Command node, npm, npx -ErrorAction SilentlyContinue)",
+      "WebFetch(domain:registry.npmjs.org)",
+      "PowerShell($dest = \"$env:TEMP\\\\claude-code-templates\"; New-Item -ItemType Directory -Force -Path $dest | Out-Null; Invoke-WebRequest -Uri \"https://registry.npmjs.org/claude-code-templates/-/claude-code-templates-1.28.16.tgz\" -OutFile \"$dest\\\\package.tgz\"; Write-Host \"Downloaded to $dest\\\\package.tgz\")",
+      "PowerShell($src = \"$env:TEMP\\\\claude-code-templates\\\\package\\\\cli-tool\\\\components\\\\skills\\\\creative-design\\\\ui-ux-pro-max\"; $dst = \"C:\\\\Users\\\\Aaron\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\aa1563c4-87a3-4a73-836b-43aec3ca94e0\\\\e85eb609-abc4-424c-9efa-13c9330a9d36\\\\skills\\\\ui-ux-pro-max\"; Copy-Item -Path $src -Destination $dst -Recurse -Force; Write-Host \"Copied to $dst\"; Get-ChildItem $dst -Recurse | Select-Object FullName)",
+      "PowerShell($src = \"$env:TEMP\\\\claude-code-templates\\\\package\\\\cli-tool\\\\components\\\\skills\\\\creative-design\\\\ui-ux-pro-max\"; $dst = \"C:\\\\Users\\\\Aaron\\\\AppData\\\\Roaming\\\\Claude\\\\local-agent-mode-sessions\\\\skills-plugin\\\\aa1563c4-87a3-4a73-836b-43aec3ca94e0\\\\e85eb609-abc4-424c-9efa-13c9330a9d36\\\\skills\\\\ui-ux-pro-max\"; Get-ChildItem $src -Recurse; Write-Host \"---DST---\"; Get-ChildItem $dst -Recurse)",
+      "Bash(python -m pip show playwright)",
+      "Bash(python -m pip show pyppeteer)",
+      "PowerShell(python --version 2>&1)",
+      "PowerShell(node --version 2>&1)",
+      "PowerShell(npm --version 2>&1)",
+      "PowerShell(Get-Command python3, py, node, npm -ErrorAction SilentlyContinue)",
+      "mcp__Claude_Preview__preview_start",
+      "mcp__chrome-devtools__list_pages",
+      "mcp__chrome-devtools__navigate_page",
+      "mcp__chrome-devtools__take_screenshot",
+      "mcp__chrome-devtools__evaluate_script",
+      "mcp__chrome-devtools__resize_page"
+    ]
+  }
+}
