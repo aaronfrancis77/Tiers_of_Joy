@@ -35,14 +35,14 @@ if (hamburger && mobileMenu) {
     mobileMenu.classList.add('open');
     hamburger.setAttribute('aria-expanded', 'true');
     mobileMenu.setAttribute('aria-hidden', 'false');
-    hamburger.textContent = '✕';
+    // icon swap handled by CSS ::after on [aria-expanded]
   };
 
   const closeMenu = () => {
     mobileMenu.classList.remove('open');
     hamburger.setAttribute('aria-expanded', 'false');
     mobileMenu.setAttribute('aria-hidden', 'true');
-    hamburger.textContent = '☰';
+    // icon swap handled by CSS ::after on [aria-expanded]
   };
 
   hamburger.addEventListener('click', () => {

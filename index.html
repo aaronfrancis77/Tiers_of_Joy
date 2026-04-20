@@ -186,11 +186,15 @@
       line-height: 1;
       font-family: Arial, sans-serif;
       transition: background 0.2s, color 0.2s;
+      min-width: 2.4rem; /* fixed width prevents layout shift on icon swap */
     }
     .nav-hamburger:hover, .nav-hamburger[aria-expanded="true"] {
       background: var(--green);
       color: var(--white);
     }
+    /* CSS-driven icon swap — no JS textContent needed, no flicker */
+    .nav-hamburger::after { content: '☰'; }
+    .nav-hamburger[aria-expanded="true"]::after { content: '✕'; }
 
     /* ── MOBILE MENU ── */
     .mobile-menu {
@@ -240,19 +244,8 @@
       padding: 5rem 4rem;
       gap: 4rem;
       position: relative;
-      overflow: hidden;
     }
 
-    .checker-block {
-      position: absolute;
-      width: 120px; height: 120px;
-      opacity: 0.07;
-      background-image: repeating-conic-gradient(var(--pink) 0% 25%, transparent 0% 50%);
-      background-size: 20px 20px;
-      border-radius: 1rem;
-    }
-    .checker-1 { top: 2rem; right: 2rem; }
-    .checker-2 { bottom: 2rem; left: 1rem; width: 80px; height: 80px; }
 
     .hero-text { position: relative; z-index: 2; }
 
@@ -342,6 +335,13 @@
       position: relative; z-index: 2;
       display: flex; align-items: center; justify-content: center;
       animation: fadeIn 0.9s 0.6s both;
+    }
+
+    /* Stickers are positioned relative to this, not the full hero column */
+    .cake-ring {
+      position: relative;
+      width: 400px; height: 400px;
+      flex-shrink: 0;
     }
 
     .cake-blob {
@@ -679,7 +679,7 @@
     /* ── FOOTER ── */
     footer {
       background: var(--espresso);
-      padding: 3rem 4rem;
+      padding: 3rem 15rem 3rem 4rem; /* right padding clears fixed WhatsApp button */
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 1.5rem;
     }
@@ -734,6 +734,7 @@
       #hero { grid-template-columns: 1fr; padding: 4rem 1.75rem 3rem; text-align: center; }
       .hero-sub { max-width: 100%; }
       .hero-actions { justify-content: center; }
+      .cake-ring { width: 300px; height: 300px; }
       .cake-blob { width: 300px; height: 300px; }
       .sticker-3 { display: none; } /* avoid overflow on small screens */
       section { padding: 4rem 1.75rem; }
@@ -769,7 +770,7 @@
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="order.html" class="nav-cta">Order Now</a></li>
     </ul>
-    <button class="nav-hamburger" id="nav-hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+    <button class="nav-hamburger" id="nav-hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu"></button>
 
     <!-- Mobile dropdown -->
     <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
@@ -783,9 +784,6 @@
 
   <!-- HERO -->
   <section id="hero">
-    <div class="checker-block checker-1"></div>
-    <div class="checker-block checker-2"></div>
-
     <div class="hero-text">
       <div class="hero-tag">🏡 Home Baked · 100% Custom</div>
       <h1>
@@ -805,12 +803,14 @@
     </div>
 
     <div class="hero-visual">
-      <div class="cake-blob">
-        <img src="images/IMG_3898.jpeg" alt="Stunning buttercream flower bouquet cake with pink satin bow" loading="eager" />
+      <div class="cake-ring">
+        <div class="cake-blob">
+          <img src="images/IMG_3898.jpeg" alt="Stunning buttercream flower bouquet cake with pink satin bow" loading="eager" />
+        </div>
+        <div class="sticker sticker-1">✨ 100% Custom</div>
+        <div class="sticker sticker-2">🎨 Hand Sculpted</div>
+        <div class="sticker sticker-3">💌 Made to Order</div>
       </div>
-      <div class="sticker sticker-1">✨ 100% Custom</div>
-      <div class="sticker sticker-2">🎨 Hand Sculpted</div>
-      <div class="sticker sticker-3">💌 Made to Order</div>
     </div>
   </section>
 
