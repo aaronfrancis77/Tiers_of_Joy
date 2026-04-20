@@ -293,8 +293,8 @@
       border-radius: 2rem;
       border: 3px solid var(--pink);
       box-shadow: 8px 8px 0 var(--pink);
-      overflow: hidden;
       position: relative;
+      /* no overflow:hidden here — that would clip the .corner-tag which hangs outside */
     }
 
     .about-img img {
@@ -302,6 +302,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 1.75rem; /* clips image to rounded corners without clipping .corner-tag */
     }
 
     .about-img .corner-tag {
