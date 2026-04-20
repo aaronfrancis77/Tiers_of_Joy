@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Page Not Found — Tiers of Joy</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700;800&family=Nunito:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #F4F7FF;
+      --pink:    #F472A8;
+      --pink-dk: #C9477E;
+      --pink-lt: #FFE0EF;
+      --green:   #2E5FA3;
+      --espresso:#0F1F3D;
+      --white:   #FAFDFF;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--espresso);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      padding: 1rem 4rem;
+      display: flex; align-items: center;
+      background: var(--white);
+      border-bottom: 2px solid var(--pink-lt);
+    }
+    .nav-logo {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--green); text-decoration: none;
+    }
+    .nav-logo span { color: var(--pink); }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+
+    .big-emoji {
+      font-size: 6rem;
+      display: block;
+      margin-bottom: 1.5rem;
+      animation: wobble 2s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-5deg); }
+      50%       { transform: rotate(5deg); }
+    }
+
+    h1 {
+      font-family: 'Baloo 2', cursive;
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-weight: 800;
+      color: var(--green);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+    }
+    h1 span { color: var(--pink); }
+
+    p {
+      font-size: 1rem;
+      color: var(--espresso);
+      opacity: 0.65;
+      line-height: 1.8;
+      max-width: 400px;
+      margin-bottom: 2.5rem;
+    }
+
+    .actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+
+    .btn-primary {
+      background: var(--pink);
+      color: var(--white);
+      padding: 0.85rem 2rem;
+      border-radius: 3rem;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      border: 2.5px solid var(--pink-dk);
+      box-shadow: 4px 4px 0 var(--pink-dk);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pink-dk); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--green);
+      padding: 0.85rem 2rem;
+      border-radius: 3rem;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1rem; font-weight: 700;
+      text-decoration: none;
+      border: 2.5px solid var(--green);
+      box-shadow: 4px 4px 0 var(--green);
+      transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { background: var(--green); color: var(--white); transform: translate(-2px, -2px); }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--espresso);
+      opacity: 0.4;
+    }
+
+    @media (max-width: 500px) { nav { padding: 1rem 1.5rem; } }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">Tiers of <span>Joy</span></a>
+  </nav>
+
+  <main>
+    <span class="big-emoji">🎂</span>
+    <h1>Oops! This page<br><span>got eaten.</span></h1>
+    <p>Looks like this page doesn't exist — maybe it was too delicious. Let's get you back to the good stuff.</p>
+    <div class="actions">
+      <a href="index.html"  class="btn-primary">Back to Home 🏡</a>
+      <a href="order.html"  class="btn-outline">Order a Cake 🎀</a>
+    </div>
+  </main>
+
+  <footer>© 2026 Tiers of Joy · Handcrafted with love 🤍</footer>
+
+</body>
+</html>

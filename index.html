@@ -4,9 +4,92 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tiers of Joy — Custom Handcrafted Cakes</title>
+
+  <!-- Favicon (emoji SVG — no file needed) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
+
+  <!-- Open Graph / Social sharing -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://tiersofjoybgo.netlify.app/" />
+  <meta property="og:title"       content="Tiers of Joy — Custom Handcrafted Cakes" />
+  <meta property="og:description" content="Show-stopping custom cakes handcrafted from scratch in Melbourne. Princess doll cakes, sculpted themes, floral designs & more. Order yours today!" />
+  <meta property="og:image"       content="https://tiersofjoybgo.netlify.app/images/IMG_3898.jpeg" />
+  <meta property="og:image:alt"   content="Stunning buttercream flower bouquet cake with pink satin bow by Tiers of Joy" />
+  <meta name="twitter:card"       content="summary_large_image" />
+  <meta name="description"        content="Show-stopping custom cakes handcrafted from scratch in Melbourne. Princess doll cakes, sculpted themes, floral designs & more. Order yours today!" />
+
+  <!-- Preload hero image for faster LCP -->
+  <link rel="preload" as="image" href="images/IMG_3898.jpeg" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Schema.org structured data — helps Google show rich results -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": ["Bakery", "LocalBusiness"],
+    "name": "Tiers of Joy",
+    "description": "Custom handcrafted cakes made from scratch in Melbourne. Specialising in character cakes, princess doll cakes, sculpted themed cakes, and elegant floral designs for birthdays, celebrations and special events.",
+    "url": "https://tiersofjoybgo.netlify.app/",
+    "image": "https://tiersofjoybgo.netlify.app/images/IMG_3898.jpeg",
+    "priceRange": "$$",
+    "servesCuisine": "Custom Cakes",
+    "areaServed": {
+      "@type": "City",
+      "name": "Melbourne",
+      "sameAs": "https://en.wikipedia.org/wiki/Melbourne"
+    },
+    "hasOfferCatalog": {
+      "@type": "OfferCatalog",
+      "name": "Custom Cake Menu",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Kids' Character Cakes",
+            "description": "Hand-sculpted fondant character cakes — Peppa Pig, CoComelon, My Little Pony, Disney and more."
+          },
+          "price": "120",
+          "priceCurrency": "AUD"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Princess & Fantasy Cakes",
+            "description": "Doll cakes, mermaid scenes and fairy tale settings for magical birthdays."
+          },
+          "price": "150",
+          "priceCurrency": "AUD"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Themed & Sculpted Cakes",
+            "description": "Fully sculpted 3D cakes — wine barrels, cars, golf courses, gardens and more."
+          },
+          "price": "180",
+          "priceCurrency": "AUD"
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "Floral & Elegant Cakes",
+            "description": "Buttercream bouquets, fondant calla lilies and edible butterfly centrepieces."
+          },
+          "price": "130",
+          "priceCurrency": "AUD"
+        }
+      ]
+    },
+    "sameAs": []
+  }
+  </script>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,9 +136,10 @@
       position: sticky; top: 0; z-index: 100;
       padding: 1rem 4rem;
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(250, 243, 227, 0.92);
+      background: rgba(250, 243, 227, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 2px solid var(--pink-lt);
+      overflow: visible; /* allow mobile dropdown to extend below */
     }
 
     .nav-logo {
@@ -89,6 +173,65 @@
     }
     .nav-cta:hover { background: var(--pink-dk) !important; transform: translateY(-2px); }
 
+    /* ── HAMBURGER ── */
+    .nav-hamburger {
+      display: none;
+      background: none;
+      border: 2.5px solid var(--green);
+      border-radius: 0.5rem;
+      padding: 0.3rem 0.65rem;
+      cursor: pointer;
+      color: var(--green);
+      font-size: 1.35rem;
+      line-height: 1;
+      font-family: Arial, sans-serif;
+      transition: background 0.2s, color 0.2s;
+    }
+    .nav-hamburger:hover, .nav-hamburger[aria-expanded="true"] {
+      background: var(--green);
+      color: var(--white);
+    }
+
+    /* ── MOBILE MENU ── */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: calc(100% + 2px);
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;
+      background: var(--white);
+      border-bottom: 2px solid var(--pink-lt);
+      box-shadow: 0 8px 32px rgba(15,31,61,0.12);
+      padding: 0.75rem 1.75rem 1.25rem;
+    }
+    .mobile-menu.open { display: flex; }
+
+    .mobile-link {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--green);
+      text-decoration: none;
+      padding: 0.8rem 0;
+      border-bottom: 1.5px solid var(--pink-lt);
+      display: block;
+      transition: color 0.2s;
+    }
+    .mobile-link:hover { color: var(--pink); }
+    .mobile-link-cta {
+      margin-top: 0.85rem;
+      background: var(--pink);
+      color: var(--white) !important;
+      padding: 0.75rem 1.5rem;
+      border-radius: 2rem;
+      border: 2.5px solid var(--pink-dk);
+      text-align: center;
+      box-shadow: 3px 3px 0 var(--pink-dk);
+      font-size: 1rem;
+    }
+
     /* ── HERO ── */
     #hero {
       display: grid;
@@ -100,13 +243,11 @@
       overflow: hidden;
     }
 
-    /* checkerboard accent */
     .checker-block {
       position: absolute;
       width: 120px; height: 120px;
       opacity: 0.07;
-      background-image:
-        repeating-conic-gradient(var(--pink) 0% 25%, transparent 0% 50%);
+      background-image: repeating-conic-gradient(var(--pink) 0% 25%, transparent 0% 50%);
       background-size: 20px 20px;
       border-radius: 1rem;
     }
@@ -138,10 +279,7 @@
       animation: fadeUp 0.7s 0.25s both;
     }
     h1 .pink { color: var(--pink); }
-    h1 .squiggle {
-      display: inline-block;
-      position: relative;
-    }
+    h1 .squiggle { display: inline-block; position: relative; }
     h1 .squiggle::after {
       content: '';
       position: absolute;
@@ -182,10 +320,7 @@
       transition: var(--transition);
       box-shadow: 4px 4px 0 var(--pink-dk);
     }
-    .btn-primary:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 var(--pink-dk);
-    }
+    .btn-primary:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--pink-dk); }
 
     .btn-outline {
       background: transparent;
@@ -200,12 +335,7 @@
       transition: var(--transition);
       box-shadow: 4px 4px 0 var(--green);
     }
-    .btn-outline:hover {
-      background: var(--green);
-      color: var(--white);
-      transform: translate(-2px, -2px);
-      box-shadow: 6px 6px 0 rgba(58,107,74,0.4);
-    }
+    .btn-outline:hover { background: var(--green); color: var(--white); transform: translate(-2px, -2px); box-shadow: 6px 6px 0 rgba(58,107,74,0.4); }
 
     /* ── Hero Visual ── */
     .hero-visual {
@@ -224,13 +354,7 @@
       animation: morphBlob 8s ease-in-out infinite;
       flex-shrink: 0;
     }
-
-    .cake-blob img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+    .cake-blob img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
     @keyframes morphBlob {
       0%,100% { border-radius: 60% 40% 55% 45% / 50% 55% 45% 50%; }
@@ -250,9 +374,9 @@
       box-shadow: 3px 3px 0 currentColor;
       white-space: nowrap;
     }
-    .sticker-1 { color: var(--green); top: 20px; right: -10px; animation: float 3s 0.3s ease-in-out infinite; }
-    .sticker-2 { color: var(--pink-dk); bottom: 40px; left: -20px; animation: float 4s 0.8s ease-in-out infinite; }
-    .sticker-3 { color: var(--green); top: 50%; right: -30px; animation: float 3.5s 1.2s ease-in-out infinite; }
+    .sticker-1 { color: var(--green);    top: 20px;  right: -10px; animation: float 3s   0.3s ease-in-out infinite; }
+    .sticker-2 { color: var(--pink-dk);  bottom: 40px; left: -20px; animation: float 4s   0.8s ease-in-out infinite; }
+    .sticker-3 { color: var(--green);    top: 50%;   right: -30px; animation: float 3.5s 1.2s ease-in-out infinite; }
 
     /* ── SECTION BASE ── */
     section { padding: 5.5rem 4rem; }
@@ -294,17 +418,13 @@
       border: 3px solid var(--pink);
       box-shadow: 8px 8px 0 var(--pink);
       position: relative;
-      /* no overflow:hidden here — that would clip the .corner-tag which hangs outside */
     }
-
     .about-img img {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 1.75rem; /* clips image to rounded corners without clipping .corner-tag */
+      border-radius: 1.75rem;
     }
-
     .about-img .corner-tag {
       position: absolute;
       bottom: -1rem; right: -1rem;
@@ -320,17 +440,10 @@
     }
 
     .about-text h2 { margin-bottom: 1rem; }
-    .about-text p {
-      font-size: 0.95rem; line-height: 1.9;
-      color: var(--green); opacity: 0.85;
-      margin-bottom: 0.9rem;
-    }
+    .about-text p { font-size: 0.95rem; line-height: 1.9; color: var(--green); opacity: 0.85; margin-bottom: 0.9rem; }
     .about-text p strong { font-weight: 700; opacity: 1; }
 
-    .fun-fact {
-      display: flex; gap: 0.75rem; flex-wrap: wrap;
-      margin-top: 1.5rem;
-    }
+    .fun-fact { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.5rem; }
     .fun-fact span {
       background: var(--white);
       border: 2px solid var(--green);
@@ -348,11 +461,7 @@
     .cakes-header { text-align: center; margin-bottom: 3rem; }
     .cakes-header p { font-size: 0.95rem; color: var(--green); opacity: 0.7; margin-top: 0.5rem; line-height: 1.8; }
 
-    .cakes-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.25rem;
-    }
+    .cakes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
 
     .cake-card {
       background: var(--white);
@@ -362,29 +471,11 @@
       transition: var(--transition);
       cursor: pointer;
     }
-    .cake-card:hover {
-      transform: translate(-3px, -5px);
-      box-shadow: 6px 8px 0 var(--pink);
-      border-color: var(--pink);
-    }
+    .cake-card:hover { transform: translate(-3px, -5px); box-shadow: 6px 8px 0 var(--pink); border-color: var(--pink); }
 
-    .cake-card-img {
-      width: 100%;
-      aspect-ratio: 1;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .cake-card-img img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .cake-card:hover .cake-card-img img {
-      transform: scale(1.06);
-    }
+    .cake-card-img { width: 100%; aspect-ratio: 1; overflow: hidden; position: relative; }
+    .cake-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .cake-card:hover .cake-card-img img { transform: scale(1.06); }
 
     .cake-card-img .tag {
       position: absolute;
@@ -401,27 +492,9 @@
     }
 
     .cake-card-body { padding: 1.25rem; }
-    .cake-card-body h3 {
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--green);
-      margin-bottom: 0.4rem;
-    }
-    .cake-card-body p {
-      font-size: 0.82rem;
-      line-height: 1.65;
-      color: var(--espresso);
-      opacity: 0.65;
-    }
-    .cake-card-body .price {
-      display: block;
-      margin-top: 0.85rem;
-      font-family: 'Baloo 2', cursive;
-      font-size: 1rem;
-      font-weight: 800;
-      color: var(--pink-dk);
-    }
+    .cake-card-body h3 { font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 700; color: var(--green); margin-bottom: 0.4rem; }
+    .cake-card-body p { font-size: 0.82rem; line-height: 1.65; color: var(--espresso); opacity: 0.65; }
+    .cake-card-body .price { display: block; margin-top: 0.85rem; font-family: 'Baloo 2', cursive; font-size: 1rem; font-weight: 800; color: var(--pink-dk); }
 
     /* ── GALLERY ── */
     #gallery { background: var(--pink-lt); }
@@ -429,11 +502,7 @@
     .gallery-header { text-align: center; margin-bottom: 3rem; }
     .gallery-header p { font-size: 0.95rem; color: var(--green); opacity: 0.7; margin-top: 0.5rem; line-height: 1.8; }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1rem;
-    }
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
 
     .gallery-item {
       border-radius: var(--radius);
@@ -442,29 +511,17 @@
       box-shadow: 3px 3px 0 var(--pink);
       position: relative;
       transition: var(--transition);
-      cursor: pointer;
+      cursor: zoom-in;
     }
-    .gallery-item:hover {
-      transform: translate(-3px, -5px);
-      box-shadow: 6px 8px 0 var(--pink-dk);
-      border-color: var(--pink-dk);
-    }
+    .gallery-item:hover { transform: translate(-3px, -5px); box-shadow: 6px 8px 0 var(--pink-dk); border-color: var(--pink-dk); }
 
-    .gallery-item img {
-      width: 100%;
-      aspect-ratio: 4/5;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .gallery-item:hover img {
-      transform: scale(1.05);
-    }
+    .gallery-item img { width: 100%; aspect-ratio: 4/5; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .gallery-item:hover img { transform: scale(1.05); }
 
     .gallery-item .gallery-label {
       position: absolute;
       bottom: 0; left: 0; right: 0;
-      background: linear-gradient(to top, rgba(15,31,61,0.75) 0%, transparent 100%);
+      background: linear-gradient(to top, rgba(15,31,61,0.8) 0%, transparent 100%);
       color: #fff;
       font-family: 'Baloo 2', cursive;
       font-size: 0.8rem;
@@ -473,24 +530,78 @@
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    .gallery-item:hover .gallery-label {
-      opacity: 1;
+    .gallery-item:hover .gallery-label { opacity: 1; }
+
+    /* ── LIGHTBOX ── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 31, 61, 0.93);
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox.open { opacity: 1; pointer-events: all; }
+
+    .lightbox-img {
+      max-width: min(90vw, 700px);
+      max-height: 85vh;
+      object-fit: contain;
+      border-radius: 1rem;
+      display: block;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      transition: opacity 0.15s ease;
+    }
+    .lightbox-img.switching { opacity: 0; }
+
+    .lightbox-close {
+      position: absolute; top: 1.25rem; right: 1.25rem;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      color: white; font-size: 1.3rem;
+      width: 44px; height: 44px;
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; line-height: 1;
+    }
+    .lightbox-close:hover { background: rgba(255,255,255,0.25); }
+
+    .lightbox-prev, .lightbox-next {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.25);
+      color: white; font-size: 2rem;
+      width: 52px; height: 52px;
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s; line-height: 1;
+    }
+    .lightbox-prev { left: 1.25rem; }
+    .lightbox-next { right: 1.25rem; }
+    .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.25); }
+
+    .lightbox-caption {
+      position: absolute; bottom: 1.75rem;
+      left: 50%; transform: translateX(-50%);
+      color: rgba(255,255,255,0.85);
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.9rem; font-weight: 600;
+      background: rgba(15,31,61,0.55);
+      padding: 0.4rem 1.1rem;
+      border-radius: 2rem; white-space: nowrap;
     }
 
     /* ── PERKS ── */
-    #perks {
-      background: var(--green);
-      color: var(--white);
-    }
-
+    #perks { background: var(--green); color: var(--white); }
     #perks .pill-label { background: rgba(255,255,255,0.15); color: var(--yellow); border-color: var(--yellow); }
     #perks h2 { color: var(--white); margin-bottom: 3rem; }
 
-    .perks-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-    }
+    .perks-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 
     .perk {
       background: rgba(255,255,255,0.08);
@@ -499,31 +610,15 @@
       padding: 2rem 1.75rem;
       transition: background 0.25s, transform 0.25s;
     }
-    .perk:hover {
-      background: rgba(255,255,255,0.13);
-      transform: translateY(-4px);
-    }
-
+    .perk:hover { background: rgba(255,255,255,0.13); transform: translateY(-4px); }
     .perk-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
-    .perk h3 {
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      color: var(--pink-lt);
-    }
+    .perk h3 { font-family: 'Baloo 2', cursive; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--pink-lt); }
     .perk p { font-size: 0.87rem; line-height: 1.75; opacity: 0.7; }
 
     /* ── REVIEWS ── */
     #reviews { background: var(--cream); }
-
     .reviews-header { text-align: center; margin-bottom: 3rem; }
-
-    .reviews-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
+    .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
 
     .review-card {
       background: var(--white);
@@ -533,20 +628,10 @@
       box-shadow: 4px 4px 0 var(--pink);
       transition: transform 0.25s, box-shadow 0.25s;
     }
-    .review-card:hover {
-      transform: translate(-2px, -3px);
-      box-shadow: 6px 7px 0 var(--pink);
-    }
+    .review-card:hover { transform: translate(-2px, -3px); box-shadow: 6px 7px 0 var(--pink); }
 
     .stars { font-size: 1rem; margin-bottom: 0.75rem; }
-    blockquote {
-      font-size: 0.9rem;
-      line-height: 1.8;
-      color: var(--espresso);
-      opacity: 0.75;
-      font-style: italic;
-      margin-bottom: 1.25rem;
-    }
+    blockquote { font-size: 0.9rem; line-height: 1.8; color: var(--espresso); opacity: 0.75; font-style: italic; margin-bottom: 1.25rem; }
 
     .reviewer { display: flex; align-items: center; gap: 0.7rem; }
     .reviewer-avatar {
@@ -557,116 +642,84 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 1rem;
     }
-    .reviewer-name {
-      font-family: 'Baloo 2', cursive;
-      font-weight: 700;
-      font-size: 0.88rem;
-      color: var(--green);
-    }
+    .reviewer-name { font-family: 'Baloo 2', cursive; font-weight: 700; font-size: 0.88rem; color: var(--green); }
     .reviewer-loc { font-size: 0.75rem; color: var(--espresso); opacity: 0.5; }
 
-    /* ── ORDER ── */
+    /* ── ORDER CTA ── */
     #order {
       background: var(--pink);
       text-align: center;
       position: relative;
       overflow: hidden;
     }
-
-    .confetti {
-      position: absolute;
-      font-size: 1.5rem;
-      opacity: 0.2;
-      pointer-events: none;
-    }
-    .c1 { top: 10%; left: 5%; animation: float 3s ease-in-out infinite; }
-    .c2 { top: 20%; right: 8%; animation: float 4s 0.5s ease-in-out infinite; }
+    .confetti { position: absolute; font-size: 1.5rem; opacity: 0.2; pointer-events: none; }
+    .c1 { top: 10%; left: 5%;   animation: float 3s   ease-in-out infinite; }
+    .c2 { top: 20%; right: 8%;  animation: float 4s   0.5s ease-in-out infinite; }
     .c3 { bottom: 15%; left: 12%; animation: float 3.5s 1s ease-in-out infinite; }
     .c4 { bottom: 10%; right: 6%; animation: float 2.8s 0.3s ease-in-out infinite; }
-    .c5 { top: 50%; left: 2%; animation: float 4s 0.7s ease-in-out infinite; }
-    .c6 { top: 40%; right: 3%; animation: float 3.2s 1.5s ease-in-out infinite; }
-
+    .c5 { top: 50%; left: 2%;   animation: float 4s   0.7s ease-in-out infinite; }
+    .c6 { top: 40%; right: 3%;  animation: float 3.2s 1.5s ease-in-out infinite; }
     #order > *:not(.confetti) { position: relative; z-index: 2; }
-
     #order .pill-label { background: rgba(255,255,255,0.2); color: var(--white); border-color: rgba(255,255,255,0.5); }
     #order h2 { color: var(--white); font-size: clamp(2.5rem, 5vw, 4rem); margin-bottom: 1rem; }
-    #order p {
-      color: rgba(255,255,255,0.85);
-      font-size: 1rem; line-height: 1.8; font-weight: 400;
-      max-width: 460px; margin: 0 auto 2rem;
-    }
+    #order p { color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.8; font-weight: 400; max-width: 460px; margin: 0 auto 2rem; }
 
     .btn-white {
-      background: var(--white);
-      color: var(--pink-dk);
-      padding: 1rem 2.5rem;
-      border-radius: 3rem;
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.1rem;
-      font-weight: 800;
-      text-decoration: none;
-      display: inline-block;
+      background: var(--white); color: var(--pink-dk);
+      padding: 1rem 2.5rem; border-radius: 3rem;
+      font-family: 'Baloo 2', cursive; font-size: 1.1rem; font-weight: 800;
+      text-decoration: none; display: inline-block;
       border: 2.5px solid var(--pink-dk);
       box-shadow: 5px 5px 0 var(--pink-dk);
       transition: var(--transition);
     }
-    .btn-white:hover {
-      transform: translate(-2px, -3px);
-      box-shadow: 7px 8px 0 var(--pink-dk);
-    }
-
+    .btn-white:hover { transform: translate(-2px, -3px); box-shadow: 7px 8px 0 var(--pink-dk); }
     .order-note { margin-top: 1.25rem; font-size: 0.8rem; color: rgba(255,255,255,0.65); }
 
     /* ── FOOTER ── */
     footer {
       background: var(--espresso);
       padding: 3rem 4rem;
-      display: flex;
-      align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 1.5rem;
     }
-
-    .footer-logo {
-      font-family: 'Baloo 2', cursive;
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: var(--pink-lt);
-    }
+    .footer-logo { font-family: 'Baloo 2', cursive; font-size: 1.4rem; font-weight: 800; color: var(--pink-lt); }
     .footer-logo span { color: var(--pink); }
-
     footer p { font-size: 0.8rem; color: rgba(253,248,240,0.4); }
-
     .footer-links { display: flex; gap: 1.5rem; }
-    .footer-links a {
-      font-family: 'Baloo 2', cursive;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: rgba(253,248,240,0.5);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
+    .footer-links a { font-family: 'Baloo 2', cursive; font-size: 0.88rem; font-weight: 600; color: rgba(253,248,240,0.5); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--pink); }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── WHATSAPP FLOAT ── */
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 1.75rem; right: 1.75rem;
+      background: #25D366;
+      color: white;
+      border-radius: 3rem;
+      padding: 0.7rem 1.2rem;
+      font-family: 'Baloo 2', cursive;
+      font-size: 0.88rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 0.5rem;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35), 3px 3px 0 #128C7E;
+      z-index: 200;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-12px); }
+    .whatsapp-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(37,211,102,0.5), 3px 6px 0 #128C7E; }
+    .whatsapp-btn svg { width: 20px; height: 20px; fill: white; flex-shrink: 0; }
+    @media (max-width: 500px) {
+      .whatsapp-btn span { display: none; }
+      .whatsapp-btn { padding: 0.85rem; border-radius: 50%; box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
     }
 
-    /* Reveal: hidden only when JS is active (body.js-ready), so screenshots & no-JS show content */
-    body.js-ready .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.65s ease, transform 0.65s ease;
-    }
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+
+    body.js-ready .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
     body.js-ready .reveal.visible { opacity: 1; transform: translateY(0); }
     body.js-ready .reveal-delay-1 { transition-delay: 0.1s; }
     body.js-ready .reveal-delay-2 { transition-delay: 0.2s; }
@@ -677,16 +730,21 @@
     @media (max-width: 900px) {
       nav { padding: 1rem 1.75rem; }
       .nav-links { display: none; }
+      .nav-hamburger { display: block; }
       #hero { grid-template-columns: 1fr; padding: 4rem 1.75rem 3rem; text-align: center; }
       .hero-sub { max-width: 100%; }
       .hero-actions { justify-content: center; }
       .cake-blob { width: 300px; height: 300px; }
+      .sticker-3 { display: none; } /* avoid overflow on small screens */
       section { padding: 4rem 1.75rem; }
       #about { grid-template-columns: 1fr; gap: 3rem; }
       .cakes-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item .gallery-label { opacity: 1; } /* always show captions on touch */
       .perks-grid, .reviews-grid { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; padding: 2.5rem 1.75rem; }
+      .lightbox-prev { left: 0.5rem; }
+      .lightbox-next { right: 0.5rem; }
     }
     @media (max-width: 500px) {
       .cakes-grid { grid-template-columns: 1fr; }
@@ -711,6 +769,16 @@
       <li><a href="#reviews">Reviews</a></li>
       <li><a href="order.html" class="nav-cta">Order Now</a></li>
     </ul>
+    <button class="nav-hamburger" id="nav-hamburger" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">☰</button>
+
+    <!-- Mobile dropdown -->
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <a href="#about"    class="mobile-link">Our Story</a>
+      <a href="#cakes"    class="mobile-link">What We Create</a>
+      <a href="#gallery"  class="mobile-link">Gallery</a>
+      <a href="#reviews"  class="mobile-link">Reviews</a>
+      <a href="order.html" class="mobile-link mobile-link-cta">Order Now 🎂</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -738,7 +806,7 @@
 
     <div class="hero-visual">
       <div class="cake-blob">
-        <img src="images/IMG_3898.jpeg" alt="Stunning buttercream flower bouquet cake with pink satin bow" />
+        <img src="images/IMG_3898.jpeg" alt="Stunning buttercream flower bouquet cake with pink satin bow" loading="eager" />
       </div>
       <div class="sticker sticker-1">✨ 100% Custom</div>
       <div class="sticker sticker-2">🎨 Hand Sculpted</div>
@@ -749,7 +817,7 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="about-img reveal">
-      <img src="images/IMG_3887.jpeg" alt="Sculpted Lexus car birthday cake with AARON number plate" />
+      <img src="images/IMG_3887.jpeg" alt="Sculpted Lexus car birthday cake with AARON number plate" loading="lazy" />
       <div class="corner-tag">Made with ♡</div>
     </div>
     <div class="about-text reveal reveal-delay-2">
@@ -789,7 +857,7 @@
     <div class="cakes-grid">
       <div class="cake-card reveal reveal-delay-1">
         <div class="cake-card-img">
-          <img src="images/IMG_3890.jpeg" alt="Peppa Pig themed birthday cake for Gabrielle, age 3" />
+          <img src="images/IMG_3890.jpeg" alt="Peppa Pig themed birthday cake for Gabrielle, age 3" loading="lazy" />
           <span class="tag">Kids' Fave!</span>
         </div>
         <div class="cake-card-body">
@@ -801,7 +869,7 @@
 
       <div class="cake-card reveal reveal-delay-2">
         <div class="cake-card-img">
-          <img src="images/IMG_3883.jpeg" alt="Barbie princess doll cake with pink fondant ball gown" />
+          <img src="images/IMG_3883.jpeg" alt="Barbie princess doll cake with pink fondant ball gown" loading="lazy" />
           <span class="tag">🔥 Most Popular</span>
         </div>
         <div class="cake-card-body">
@@ -813,7 +881,7 @@
 
       <div class="cake-card reveal reveal-delay-3">
         <div class="cake-card-img">
-          <img src="images/IMG_3884.jpeg" alt="Rustic wine barrel cake Aged to Perfection with real grapes" />
+          <img src="images/IMG_3884.jpeg" alt="Rustic wine barrel cake Aged to Perfection with real grapes" loading="lazy" />
           <span class="tag">Showstopper</span>
         </div>
         <div class="cake-card-body">
@@ -825,7 +893,7 @@
 
       <div class="cake-card reveal reveal-delay-4">
         <div class="cake-card-img">
-          <img src="images/IMG_3897.jpeg" alt="Elegant floral cake with hand-crafted calla lily flowers and gold-edged leaves" />
+          <img src="images/IMG_3897.jpeg" alt="Elegant floral cake with hand-crafted calla lily flowers and gold-edged leaves" loading="lazy" />
           <span class="tag">Elegant</span>
         </div>
         <div class="cake-card-body">
@@ -842,40 +910,40 @@
     <div class="gallery-header">
       <span class="pill-label reveal">The Gallery</span>
       <h2 class="reveal reveal-delay-1">More of Our Work ✨</h2>
-      <p class="reveal reveal-delay-2">Every cake is one of a kind. Here are some of our favourites — yours could be next!</p>
+      <p class="reveal reveal-delay-2">Every cake is one of a kind. Click any photo to see it up close!</p>
     </div>
 
     <div class="gallery-grid">
-      <div class="gallery-item reveal reveal-delay-1">
-        <img src="images/IMG_3892.jpeg" alt="Watercolour butterfly birthday cake for Abigal with edible butterflies" />
+      <div class="gallery-item reveal reveal-delay-1" role="button" tabindex="0" aria-label="View Butterfly Garden Cake">
+        <img src="images/IMG_3892.jpeg" alt="Watercolour butterfly birthday cake for Abigal with edible butterflies" loading="lazy" />
         <div class="gallery-label">Butterfly Garden Cake</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-2">
-        <img src="images/IMG_3886.jpeg" alt="Little Mermaid ocean themed cake with fondant sea creatures" />
+      <div class="gallery-item reveal reveal-delay-2" role="button" tabindex="0" aria-label="View Little Mermaid Scene">
+        <img src="images/IMG_3886.jpeg" alt="Little Mermaid ocean themed cake with fondant sea creatures" loading="lazy" />
         <div class="gallery-label">Little Mermaid Scene</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-3">
-        <img src="images/IMG_3895.jpeg" alt="Two-tier My Little Pony cake with Rainbow Dash face and pony figurines" />
+      <div class="gallery-item reveal reveal-delay-3" role="button" tabindex="0" aria-label="View My Little Pony 2-Tier">
+        <img src="images/IMG_3895.jpeg" alt="Two-tier My Little Pony cake with Rainbow Dash face and pony figurines" loading="lazy" />
         <div class="gallery-label">My Little Pony 2-Tier</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-4">
-        <img src="images/IMG_3888.jpeg" alt="Vegetable garden cake with chocolate fence and fondant veggies" />
+      <div class="gallery-item reveal reveal-delay-4" role="button" tabindex="0" aria-label="View Vegetable Garden Cake">
+        <img src="images/IMG_3888.jpeg" alt="Vegetable garden cake with chocolate fence and fondant veggies" loading="lazy" />
         <div class="gallery-label">Vegetable Garden Cake</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-1">
-        <img src="images/IMG_3894.jpeg" alt="Golf course cake for an 80th birthday with piped grass and fairway" />
+      <div class="gallery-item reveal reveal-delay-1" role="button" tabindex="0" aria-label="View Golf Course 80th Birthday">
+        <img src="images/IMG_3894.jpeg" alt="Golf course cake for an 80th birthday with piped grass and fairway" loading="lazy" />
         <div class="gallery-label">Golf Course — 80th Birthday</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-2">
-        <img src="images/IMG_3891.jpeg" alt="CoComelon themed 1st birthday cake for Gabi with ladybug" />
+      <div class="gallery-item reveal reveal-delay-2" role="button" tabindex="0" aria-label="View CoComelon 1st Birthday">
+        <img src="images/IMG_3891.jpeg" alt="CoComelon themed 1st birthday cake for Gabi with ladybug" loading="lazy" />
         <div class="gallery-label">CoComelon 1st Birthday</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-3">
-        <img src="images/IMG_3896.jpeg" alt="Fun birthday cake with fondant figurine of person relaxing with laptop" />
+      <div class="gallery-item reveal reveal-delay-3" role="button" tabindex="0" aria-label="View Custom Fondant Figurine Cake">
+        <img src="images/IMG_3896.jpeg" alt="Fun birthday cake with fondant figurine of person relaxing with laptop" loading="lazy" />
         <div class="gallery-label">Custom Fondant Figurine Cake</div>
       </div>
-      <div class="gallery-item reveal reveal-delay-4">
-        <img src="images/IMG_3898.jpeg" alt="Overflowing buttercream flower bouquet cake with pink satin bow" />
+      <div class="gallery-item reveal reveal-delay-4" role="button" tabindex="0" aria-label="View Buttercream Bouquet Cake">
+        <img src="images/IMG_3898.jpeg" alt="Overflowing buttercream flower bouquet cake with pink satin bow" loading="lazy" />
         <div class="gallery-label">Buttercream Bouquet Cake</div>
       </div>
     </div>
@@ -912,6 +980,7 @@
       <h2 class="reveal reveal-delay-1">People are Obsessed 🥰</h2>
     </div>
 
+    <!-- ✏️ TODO: Replace these with real reviews from actual customers -->
     <div class="reviews-grid">
       <div class="review-card reveal reveal-delay-1">
         <div class="stars">⭐⭐⭐⭐⭐</div>
@@ -951,7 +1020,7 @@
     </div>
   </section>
 
-  <!-- ORDER -->
+  <!-- ORDER CTA -->
   <section id="order">
     <span class="confetti c1">🎀</span>
     <span class="confetti c2">🌸</span>
@@ -981,7 +1050,27 @@
     </div>
   </footer>
 
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image viewer">
+    <button class="lightbox-close" aria-label="Close">✕</button>
+    <button class="lightbox-prev" aria-label="Previous">&#8249;</button>
+    <img class="lightbox-img" src="" alt="" />
+    <button class="lightbox-next" aria-label="Next">&#8250;</button>
+    <div class="lightbox-caption"></div>
+  </div>
 
+  <!-- WHATSAPP FLOATING BUTTON -->
+  <!-- ✏️ TODO: Replace YOUR_PHONE_NUMBER with the actual number e.g. 61412345678 (no + or spaces) -->
+  <a href="https://wa.me/YOUR_PHONE_NUMBER?text=Hi%20Tiers%20of%20Joy!%20I%27d%20love%20to%20enquire%20about%20a%20custom%20cake%20%F0%9F%8E%82"
+     class="whatsapp-btn"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span>Order on WhatsApp</span>
+  </a>
 
   <script src="js/main.js" defer></script>
 </body>
