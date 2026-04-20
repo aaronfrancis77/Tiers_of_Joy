@@ -4,7 +4,31 @@
 [[headers]]
   for = "/*"
   [headers.values]
+    # Clickjacking protection
     X-Frame-Options = "DENY"
+
+    # Legacy XSS filter (older browsers)
     X-XSS-Protection = "1; mode=block"
+
+    # Prevent MIME-type sniffing
     X-Content-Type-Options = "nosniff"
+
+    # Don't leak full URL in Referer header to third parties
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Force HTTPS for 1 year, including subdomains
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+
+    # Content Security Policy
+    # - script-src: own files + Formspree AJAX CDN on unpkg
+    # - style-src: own files + Google Fonts stylesheet (unsafe-inline needed for <style> blocks)
+    # - font-src: Google Fonts CDN
+    # - img-src: own images only + data URIs (for inline SVG backgrounds)
+    # - connect-src: Formspree API (AJAX form submissions)
+    # - form-action: Formspree only (no other POST targets)
+    # - frame-ancestors: nobody can iframe this site
+    # - object-src / base-uri: locked down
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src https://formspree.io; form-action https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none';"
+
+    # Disable browser features the site has no reason to use
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), interest-cohort=()"

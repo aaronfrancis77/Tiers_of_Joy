@@ -384,6 +384,8 @@
     <form id="order-form" class="form-card">
 
       <input type="hidden" name="_subject" value="🎂 New Cake Order — Tiers of Joy" />
+      <!-- Honeypot: invisible to humans, filled by bots → Formspree rejects the submission -->
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
       <!-- Form-level error banner -->
       <div class="form-error-banner" data-fs-error>

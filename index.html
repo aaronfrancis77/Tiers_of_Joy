@@ -976,34 +976,12 @@
     <div class="footer-links">
       <a href="#">Instagram</a>
       <a href="#">Facebook</a>
-      <a href="mailto:dinogaming4ever@gmail.com">Email</a>
+      <a href="order.html">Email Us</a>
     </div>
   </footer>
 
 
 
-  <script>
-    // Mark body as JS-active so reveal animations engage (no-JS = all content visible)
-    document.body.classList.add('js-ready');
-
-    const revealAll = () => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible'));
-
-    // navigator.webdriver = true in Puppeteer / Chrome DevTools Protocol (screenshot tools)
-    // Also reveal all if the full page fits in one viewport (nothing to scroll)
-    if (navigator.webdriver || document.documentElement.scrollHeight <= window.innerHeight) {
-      revealAll();
-    } else {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) {
-            e.target.classList.add('visible');
-            observer.unobserve(e.target);
-          }
-        });
-      }, { threshold: 0.12, rootMargin: '0px 0px 100px 0px' });
-
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    }
-  </script>
+  <script src="js/main.js" defer></script>
 </body>
 </html>
